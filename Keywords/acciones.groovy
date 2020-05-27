@@ -18,6 +18,7 @@ import com.kms.katalon.core.testobject.ObjectRepository
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords
+import com.sun.org.apache.xpath.internal.compiler.Keywords
 
 import internal.GlobalVariable
 
@@ -46,8 +47,14 @@ import com.kms.katalon.core.webui.exception.WebElementNotFoundException
 
 
 class acciones {
-	
-	
+
+	private WebDriver driver = DriverFactory.getWebDriver()
+
+	/*public acciones(WebDriver driver){
+	 this.driver = driver
+	 }*/
+
+
 	/**
 	 * Refresh browser
 	 */
@@ -77,8 +84,8 @@ class acciones {
 			KeywordUtil.markFailed("Fail to click on element")
 		}
 	}
-	
-	
+
+
 	/**
 	 * Click en un element usando XPath selector
 	 * @param WebDriver
@@ -87,11 +94,11 @@ class acciones {
 	 */
 	@Keyword
 	def darClick(String xpath) {
-		
-		try {			
-			WebDriver driver = DriverFactory.getWebDriver()
-			KeywordUtil.logInfo("Clicking element")		
-			driver.findElement(By.xpath(xpath)).click()		
+
+		try {
+			//WebDriver driver = DriverFactory.getWebDriver()
+			KeywordUtil.logInfo("Clicking element")
+			driver.findElement(By.xpath(xpath)).click()
 			KeywordUtil.markPassed("Se ha hecho clic en el elemento.")
 		} catch (WebElementNotFoundException e) {
 			KeywordUtil.markFailed("Elemento no encontrado")
@@ -99,7 +106,7 @@ class acciones {
 			KeywordUtil.markFailed("Error al hacer clic en el elemento")
 		}
 	}
-	
+
 	/**
 	 * Click en un elemento Link usando XPath Selector
 	 * @param WebDriver
@@ -110,7 +117,7 @@ class acciones {
 	@Keyword
 	def darClickLink(String linkText){
 		try{
-			WebDriver driver = DriverFactory.getWebDriver()
+			//WebDriver driver = DriverFactory.getWebDriver()
 			driver.findElement(By.xpath("//a[contains(text(),'"+ linkText +"')]")).click()
 			KeywordUtil.markPassed("Se ha hecho clic en el elemento.")
 		}catch(WebElementNotFoundException e){
@@ -119,7 +126,7 @@ class acciones {
 			KeywordUtil.markFailed("Error al hacer clic en el elemento")
 		}
 	}
-	
+
 
 	/**
 	 * Realiza una espera
@@ -128,11 +135,18 @@ class acciones {
 	 * @author Pedro Ogando
 	 * **/
 	@Keyword
-	def espera(Integer seg){
-		WebDriver driver = DriverFactory.getWebDriver()
-		driver.manage().timeouts().implicitlyWait(seg, TimeUnit.SECONDS)
-	}	
-	
+	Boolean espera(Integer seg){
+		//WebDriver driver = DriverFactory.getWebDriver()
+		Boolean esperar = driver.manage().timeouts().implicitlyWait(seg, TimeUnit.SECONDS)
+		
+		if(esperar){
+			KeywordUtil.markPassed("Exitoso")
+		}else{
+			KeywordUtil.markFailed("Fallido")
+		}	
+		
+	}
+
 	/**
 	 * Selecciona un elemento de una lista desplegable
 	 * @param WebDriver
@@ -140,9 +154,9 @@ class acciones {
 	 * @author Pedro Ogando
 	 * **/
 	@Keyword
-	def selectItem(String nameItem){
+	void selectItem(String nameItem){
 		try{
-			WebDriver driver = DriverFactory.getWebDriver()
+			//	WebDriver driver = DriverFactory.getWebDriver()
 			driver.findElement(By.xpath("//option[contains(text(),'"+ nameItem +"')]")).click()
 			KeywordUtil.markPassed("Se ha seleccionado en el elemento.")
 		}catch(WebElementNotFoundException e){
@@ -151,7 +165,7 @@ class acciones {
 			KeywordUtil.markFailed("Error al seleccionar el elemento")
 		}
 	}
-	
+
 	/**
 	 * Introduce un texto en un TextBox
 	 * @param WebDriver
@@ -159,11 +173,11 @@ class acciones {
 	 * @author Pedro Ogando
 	 * **/	
 	@Keyword
-	def ponerTexto(String xpath, String text){
+	void ponerTexto(String xpath, String text){
 		try{
-			WebDriver driver = DriverFactory.getWebDriver()
+			//WebDriver driver = DriverFactory.getWebDriver()
 			driver.findElement(By.xpath(xpath)).sendKeys(text)
-			KeywordUtil.markPassed("Se ha colocado el texto en el elemento.")
+			KeywordUtil.markPassed("Se ha colocado el texto "+ text + " en el elemento.")
 		}catch(WebElementNotFoundException e){
 			KeywordUtil.markFailed("Elemento no encontrado")
 		}catch(Exception){
@@ -172,6 +186,58 @@ class acciones {
 	}
 
 	
+	/**
+	 * Verifica si el texto es cargado o existe
+	 * @param Boolean
+	 * @param String
+	 * @retun true si el elemento existe
+	 * @author pogando Pedro Ogando
+	 **/
+	@Keyword
+	Boolean verificarTexto(String texto){
+		String pageSource = driver.getPageSource()
+		Boolean getPS = pageSource.contains(texto)
+
+		if(getPS){
+			//return true
+			KeywordUtil.markPassed("Elemento encontrado")
+
+		}else{
+			//return false
+			KeywordUtil.markFailed("Elemento no encontrado")
+		}
+		
+		return getPS
+	}
+	
+	@Keyword
+	Boolean verficarElementoPresente(String xpath, Integer seg){
+		driver.manage().timeouts().pageLoadTimeout(seg, TimeUnit.SECONDS)
+		Boolean element = driver.findElement(By.xpath(xpath))
+	
+		if(element != null){			
+			KeywordUtil.markPassed("Elemento esta presente")
+		}else{
+			KeywordUtil.markFailed("Elemento no esta presente")
+		}
+		
+		return element
+	}
+	
+	@Keyword
+	Boolean esperarPagina(Integer seg){
+		Boolean esperar = driver.manage().timeouts().pageLoadTimeout(seg, TimeUnit.SECONDS)
+		
+		if(esperar){
+			KeywordUtil.markPassed("Existo")
+		}else{
+			KeywordUtil.markFailed("Fallido")
+		}
+	}
+	
+	
+	
+
 	/**
 	 * Get all rows of HTML table
 	 * @param table Katalon test object represent for HTML table
