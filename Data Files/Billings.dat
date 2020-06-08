@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DataFileEntity>
    <description></description>
-   <name>New Test Data</name>
+   <name>Billings</name>
    <tag></tag>
    <containsHeaders>true</containsHeaders>
    <csvSeperator></csvSeperator>
-   <dataFileGUID>3fe9fc4e-d2fe-49a2-8dfe-a43ce85eed8c</dataFileGUID>
-   <dataSourceUrl></dataSourceUrl>
+   <dataFileGUID>3c78e591-6bfd-450d-bfe9-13c2c29993ad</dataFileGUID>
+   <dataSourceUrl>C:\Users\pogando\Desktop\Training_Katalon\PracticeAutomationTesting\Test_Project\Data Files\Billing.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>false</isInternalPath>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
-   <sheetName></sheetName>
+   <sheetName>TestDriver</sheetName>
    <usingGlobalDBSetting>false</usingGlobalDBSetting>
 </DataFileEntity>
