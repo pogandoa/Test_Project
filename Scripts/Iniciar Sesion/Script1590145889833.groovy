@@ -21,6 +21,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 
+
 WebUI.openBrowser(GlobalVariable.Url)
 
 WebUI.maximizeWindow()
@@ -36,22 +37,20 @@ CustomKeywords.'acciones.espera'(30)
 CustomKeywords.'acciones.verficarElementoPresente'('//input[@type=\'submit\']', 30)
 
 if (CustomKeywords.'acciones.verificarTexto'('Login')) {
-    CustomKeywords.'acciones.espera'(30)
+	CustomKeywords.'acciones.espera'(30)
 
-    CustomKeywords.'acciones.ponerTexto'('//input[@id=\'username\']', GlobalVariable.Username)
+	CustomKeywords.'acciones.ponerTexto'('//input[@id=\'username\']', GlobalVariable.Username)
 
-    CustomKeywords.'acciones.ponerTexto'('//input[@id=\'password\']', GlobalVariable.Password)
+	CustomKeywords.'acciones.ponerTexto'('//input[@id=\'password\']', GlobalVariable.Password)
 
-    CustomKeywords.'acciones.espera'(30)
+	CustomKeywords.'acciones.espera'(30)
 
-    CustomKeywords.'acciones.darClick'('//input[@type=\'submit\']')
+	CustomKeywords.'acciones.darClick'('//input[@type=\'submit\']')
 
-    CustomKeywords.'acciones.esperarPagina'(30)
+	CustomKeywords.'acciones.esperarPagina'(30)
 
-    CustomKeywords.'acciones.verificarTexto'('johndoe')
+	CustomKeywords.'acciones.verificarTexto'('johndoe')
 
-    CustomKeywords.'acciones.espera'(30)
-} else {
-    CustomKeywords.'acciones.espera'(348)
+	CustomKeywords.'acciones.espera'(30)
 }
 
